@@ -6,7 +6,9 @@ test.describe("Coffee-cart-css", () => {
   });
 
   test("should update total after adding a drink", async ({ page }) => {
-    await page.locator('[aria-label="Cappuccino"]').click();
+    await page
+      .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
+      .click();
 
     await expect(page.locator(".pay")).toContainText("Total: $19.00");
   });
@@ -14,8 +16,15 @@ test.describe("Coffee-cart-css", () => {
   test("should display correct total after adding two drinks", async ({
     page,
   }) => {
-    await page.locator('[aria-label="Cappuccino"]').click();
-    await page.locator('[aria-label="Espresso"]').click();
+    await page
+      .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
+      .click();
+
+    await page
+      .locator(
+        ".cup-body:has(.ingredient.espresso):not(:has(.ingredient.water)):not(:has(.ingredient.milk)):not(:has(.ingredient.whipped))",
+      )
+      .click();
 
     await expect(page.locator(".pay")).toContainText("Total: $29.00");
   });
@@ -23,7 +32,11 @@ test.describe("Coffee-cart-css", () => {
   test("should fill and validate checkout form fields after adding an item to cart", async ({
     page,
   }) => {
-    await page.locator('[aria-label="Espresso Con Panna"]').click();
+    await page
+      .locator(
+        ".cup-body:has(.ingredient.espresso):has(.ingredient.whipped.cream):not(:has(.ingredient.chocolate.syrup))",
+      )
+      .click();
 
     await page.locator(".pay").click();
 
@@ -37,7 +50,9 @@ test.describe("Coffee-cart-css", () => {
   test("should successfully place order for Cappuccino and display purchase confirmation", async ({
     page,
   }) => {
-    await page.locator('[aria-label="Cappuccino"]').click();
+    await page
+      .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
+      .click();
     await page.locator(".pay").click();
     await page.locator("#name").fill("Olga");
     await page.locator("#email").fill("olga@test.com");
@@ -49,12 +64,12 @@ test.describe("Coffee-cart-css", () => {
   test("should display Cappuccino in cart after adding it from menu", async ({
     page,
   }) => {
-    await page.locator('[aria-label="Cappuccino"]').click();
+    await page
+      .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
+      .click();
     await page.locator('[href="/cart"]').click();
 
-    const product = page.locator(
-      '.list-item:has([aria-label="Remove all Cappuccino"])',
-    );
+    const product = page.locator(".list-item:has(.delete)");
 
     await expect(product).toContainText("Cappuccino");
   });
