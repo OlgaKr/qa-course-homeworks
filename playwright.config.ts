@@ -11,17 +11,45 @@ export default defineConfig({
 
   workers: process.env.CI ? 1 : undefined,
 
-  reporter: [["dot"], ["html"]],
+  reporter: "html",
 
   use: {
-    trace: "on-first-retry",
     baseURL: "https://coffee-cart.app/",
+    trace: "on-first-retry",
   },
 
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+    },
+
+    {
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
+
+    {
+      name: "coffee-cart",
+      testMatch: "coffee-cart/**/*.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "https://coffee-cart.app/",
+      },
+    },
+
+    {
+      name: "aria-practice",
+      testMatch: "aria-practice/**/*.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "http://104.168.59.50/laboratory/aria",
+      },
     },
   ],
 });
