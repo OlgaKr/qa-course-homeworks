@@ -51,5 +51,14 @@ export default defineConfig({
         baseURL: "http://104.168.59.50/laboratory/aria",
       },
     },
+
+    {
+      name: "xpath-interactions",
+      testMatch: "xpath-interactions/**/*.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "http://104.168.59.50/laboratory/interactions",
+      },
+    },
   ],
 });
