@@ -12,6 +12,6 @@ export async function submitPaymentForm(
   name: string,
   email: string,
 ) {
-  fillPaymentForm(page, name, email);
+  await fillPaymentForm(page, name, email);
   await page.getByRole('button', { name: 'Submit' }).click();
 }
