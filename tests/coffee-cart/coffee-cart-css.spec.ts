@@ -1,19 +1,19 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test';
 
-test.describe("Coffee-cart-css", () => {
+test.describe('Coffee-cart-css', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("");
+    await page.goto('');
   });
 
-  test("should update total after adding a drink", async ({ page }) => {
+  test('should update total after adding a drink', async ({ page }) => {
     await page
       .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
       .click();
 
-    await expect(page.locator(".pay")).toContainText("Total: $19.00");
+    await expect(page.locator('.pay')).toContainText('Total: $19.00');
   });
 
-  test("should display correct total after adding two drinks", async ({
+  test('should display correct total after adding two drinks', async ({
     page,
   }) => {
     await page
@@ -22,46 +22,46 @@ test.describe("Coffee-cart-css", () => {
 
     await page
       .locator(
-        ".cup-body:has(.ingredient.espresso):not(:has(.ingredient.water)):not(:has(.ingredient.milk)):not(:has(.ingredient.whipped))",
+        '.cup-body:has(.ingredient.espresso):not(:has(.ingredient.water)):not(:has(.ingredient.milk)):not(:has(.ingredient.whipped))',
       )
       .click();
 
-    await expect(page.locator(".pay")).toContainText("Total: $29.00");
+    await expect(page.locator('.pay')).toContainText('Total: $29.00');
   });
 
-  test("should fill and validate checkout form fields after adding an item to cart", async ({
+  test('should fill and validate checkout form fields after adding an item to cart', async ({
     page,
   }) => {
     await page
       .locator(
-        ".cup-body:has(.ingredient.espresso):has(.ingredient.whipped.cream):not(:has(.ingredient.chocolate.syrup))",
+        '.cup-body:has(.ingredient.espresso):has(.ingredient.whipped.cream):not(:has(.ingredient.chocolate.syrup))',
       )
       .click();
 
-    await page.locator(".pay").click();
+    await page.locator('.pay').click();
 
-    await page.locator("#name").fill("Olga");
-    await page.locator("#email").fill("olga@test.com");
+    await page.locator('#name').fill('Olga');
+    await page.locator('#email').fill('olga@test.com');
 
-    await expect(page.locator("#name")).toHaveValue("Olga");
-    await expect(page.locator("#email")).toHaveValue("olga@test.com");
+    await expect(page.locator('#name')).toHaveValue('Olga');
+    await expect(page.locator('#email')).toHaveValue('olga@test.com');
   });
 
-  test("should successfully place order for Cappuccino and display purchase confirmation", async ({
+  test('should successfully place order for Cappuccino and display purchase confirmation', async ({
     page,
   }) => {
     await page
       .locator('.cup-body:has(.ingredient.steamed.milk[style="height: 20%;"])')
       .click();
-    await page.locator(".pay").click();
-    await page.locator("#name").fill("Olga");
-    await page.locator("#email").fill("olga@test.com");
-    await page.locator("#submit-payment").click();
+    await page.locator('.pay').click();
+    await page.locator('#name').fill('Olga');
+    await page.locator('#email').fill('olga@test.com');
+    await page.locator('#submit-payment').click();
 
-    await expect(page.locator(".snackbar.success")).toBeVisible();
+    await expect(page.locator('.snackbar.success')).toBeVisible();
   });
 
-  test("should display Cappuccino in cart after adding it from menu", async ({
+  test('should display Cappuccino in cart after adding it from menu', async ({
     page,
   }) => {
     await page
@@ -69,8 +69,8 @@ test.describe("Coffee-cart-css", () => {
       .click();
     await page.locator('[href="/cart"]').click();
 
-    const product = page.locator(".list-item:has(.delete)");
+    const product = page.locator('.list-item:has(.delete)');
 
-    await expect(product).toContainText("Cappuccino");
+    await expect(product).toContainText('Cappuccino');
   });
 });
